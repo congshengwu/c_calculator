@@ -10,6 +10,24 @@
  *  5.原理是用了三个栈,指针不断分析字符串里每个字符,
  *	  不断存进三个栈中,一个存数字的个位十位等每一位，一个存运算符，一个存数字. 
  */
+
+double calculate(char *c);
+
+int main() {
+	
+	while(1){
+		char c[100];
+		printf("算式: ");
+		scanf("%s",c);
+		if(c[0] == 'q')//按q退出程序
+			return 0;
+		double result = calculate(c);//此处调用
+		printf("结果: %0.10f\n",result);//输出保留小数点后十位
+	}
+	
+	return 0;
+}
+
 double calculate(char *c){
 	//c是存计算式字符串的指针
 	double result=0;//最终返回变量
@@ -19,7 +37,7 @@ double calculate(char *c){
 	double opnd[LEN];//操作数栈,能存10个操作数,包括小数点
 	int opnd_index=0;
 	char optr[LEN]="";//操作符栈
-	optr[0]=0;
+	//optr[0]=0; 2017.6.27被注释!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	int optr_index=0;
 	/*当 ) 进入栈的时候，会将 (……)里的计算式都处理了,
 	左栈存一个两个数结合的新数,右栈指针指向(,
@@ -28,7 +46,7 @@ double calculate(char *c){
 	char num_stack[LEN]="";//临时数栈
 	int num_stack_index=0;//临时数下标
 	double num_temp=0;//临时数
-	
+	optr[0]=0;//2017.6.27添加!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	//注意：while的最后一次运行是 数字的，所以数字下面的判断都不会执行
 	while(c_len) {//+-×÷.肯不会在字符串开头 (可能在开头，需要处理
 		c_len--;
@@ -535,19 +553,4 @@ double calculate(char *c){
 	result=opnd[0];
 	
 	return result;
-}
-
-int main() {
-	
-	while(1){
-		char c[100];
-		printf("算式: ");
-		scanf("%s",c);
-		if(c[0] == 'q')//按q退出程序
-			return 0;
-		double result = calculate(c);//此处调用
-		printf("结果: %0.10f\n",result);//输出保留小数点后十位
-	}
-	
-	return 0;
 }
