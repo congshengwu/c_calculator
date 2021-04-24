@@ -1,1 +1,1 @@
-# Calculator based on language C and postfix expression.
+Calculator based on language C and postfix expression.
